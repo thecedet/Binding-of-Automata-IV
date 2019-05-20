@@ -11,6 +11,7 @@ class Projectile(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
 
+        pygame.mixer.Channel(1).play(pygame.mixer.Sound("src/music/shot.wav"))
 
         directory_list = ["src/texture/projectile_enemie.png","src/texture/explode.png","src/texture/bloc_all.png","src/texture/projectile_joueur.png"]
         sprite_list = []
@@ -91,7 +92,10 @@ class Projectile(pygame.sprite.Sprite):
 
     def collision(self, dir):
         hits = pygame.sprite.spritecollide(self, self.game.walls, False)
-        if hits:self.game.allSprites.remove(self)
+        if hits:
+            for hit in hits:
+                if hit.breakable: self.game.walls.remove(hit); self.game.allSprites.remove(hit)
+            self.game.allSprites.remove(self)
 
 
 

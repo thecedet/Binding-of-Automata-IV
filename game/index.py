@@ -5,12 +5,11 @@ from math import *
 from game.block import Block
 from game.player import Player
 
+import socket
+import json
+import threading
+
 screenSize = [1280,960]
-
-
-
-
-
 
 
 class Camera:
@@ -34,6 +33,8 @@ class Game():
         self.clock = pygame.time.Clock()
         
         self.playing = True
+
+        pygame.mixer.Channel(0).play(pygame.mixer.Sound("src/music/main.ogg"))
 
         self.mapBuilder(level)
         self.init()
@@ -67,7 +68,8 @@ class Game():
         for wall in self.data["blocks"]:
             for i in range(wall["w"]):
                 for j in range(wall["h"]):
-                    Block(self, wall["x"]+i, wall["y"]+j, wall["color"])
+                    breakable = True if "breakable" in wall.keys() else False
+                    Block(self, wall["x"]+i, wall["y"]+j, wall["color"], breakable=breakable)
         self.player = Player(self, self.playerSpawn[0], self.playerSpawn[1])
         self.camera = Camera(self.width, self.height)
 
@@ -104,4 +106,6 @@ class Game():
             if event.type == pygame.QUIT:pygame.quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: pygame.quit()
+                if event.key == pygame.K_m:
+                    pygame.mixer.music.stop()
 

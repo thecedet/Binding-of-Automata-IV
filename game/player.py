@@ -6,7 +6,12 @@ screenSize = [1280,960]
 
 
 class Player(pygame.sprite.Sprite):
+    uid = 0
     def __init__(self, game, x, y):
+        
+        Player.uid += 1
+        self.uid = Player.uid
+
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game

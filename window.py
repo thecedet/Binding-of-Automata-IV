@@ -31,8 +31,8 @@ class Window():
         
 
         self.elementsDraw.append(Menu(self.window,element=[
-            ["Lancer la partie", lambda: self.start("level1")],
-            ["Choix du chapitre", lambda: self.start("level2")],
+            ["Niveau 1", lambda: self.start("level1")],
+            ["Niveau 2", lambda: self.start("level2")],
             ["Salle de test", self.start],
             ["Paramètre", self.start],
             ["Quitter", self.quit]
